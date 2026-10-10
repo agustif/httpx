@@ -23,6 +23,10 @@ jobs:
         run: "scripts/install"
       - name: "Run linting checks"
         run: "scripts/check"
+      - name: "Pin build backend (hatchling==1.31.0; 1.32+ emits Metadata-Version 2.5, rejected by pinned twine==6.1.0/packaging)"
+        run: |
+          echo "hatchling==1.31.0" > "$RUNNER_TEMP/hatchling-pin.txt"
+          echo "PIP_CONSTRAINT=$RUNNER_TEMP/hatchling-pin.txt" >> "$GITHUB_ENV"
       - name: "Build package & docs"
         run: "scripts/build"
       - name: "Run tests"
